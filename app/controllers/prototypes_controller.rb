@@ -1,7 +1,7 @@
 class PrototypesController < ApplicationController
   before_action :move_to_index, except: [:index, :show]
   def index
-    @users = User.all
+    @prototypes = Prototype.all
   end
 
   def new
@@ -13,12 +13,17 @@ class PrototypesController < ApplicationController
   end
 
   def create
+    Prototype.create (prototype_params)
+  end
 end
 
 private
+def prototype_params
+  params.require(:prototype).permit(:title, :catch_copy, :concept)
+end
 
 def user_params
-  params.require(:user).permit(:name, :email)
+  params.merge(user_id: current_user.id)
 end
 
 def move_to_index
