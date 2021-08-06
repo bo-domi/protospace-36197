@@ -11,6 +11,8 @@ class PrototypesController < ApplicationController
   def update
     current_user.update(user_params)
   end
+
+  def create
 end
 
 private
