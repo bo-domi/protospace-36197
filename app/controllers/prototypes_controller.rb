@@ -11,7 +11,7 @@ class PrototypesController < ApplicationController
   def update
     @prototype = Prototype.find(params[:id])
     if @prototype.update(prototype_params)
-      redirect_to root_path
+      redirect_to action: "show"
      else
       render :edit
      end
@@ -31,7 +31,20 @@ class PrototypesController < ApplicationController
      end
 
      def show
+      @prototype = Prototype.find(params[:prototype_id] || params[:id])
+      @comment = Comment.new
+      @comments = @prototype.comments.includes(:user)
+     end
+
+     def destroy
       @prototype = Prototype.find(params[:id])
+      @prototype.destroy
+      if @prototype.destroy
+        redirect_to action: "index"
+       else
+        render :show
+       end
+     end
      end
 
 
@@ -44,5 +57,4 @@ def move_to_index
   unless user_signed_in?
     redirect_to action: :index
   end
-end
 end
