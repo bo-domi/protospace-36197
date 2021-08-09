@@ -8,6 +8,7 @@ class User < ApplicationRecord
          validates :profile, presence: true
          validates :belongs, presence: true
          validates :officer, presence: true
-
+has_many :prototypes, dependent: :destroy
+has_many :comments, dependent: :destroy
 
 end
